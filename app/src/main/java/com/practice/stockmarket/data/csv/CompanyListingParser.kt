@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CompanyListingParser @Inject constructor( // Dagger
+class CompanyListingParser @Inject constructor(
 ) :CSVParser<CompanyListing> {
   
   override suspend fun parse(inputStream : InputStream) : List<CompanyListing> {

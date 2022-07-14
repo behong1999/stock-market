@@ -18,10 +18,14 @@ class CompanyListingsViewModel @Inject constructor(
   private val repository : StockRepository
 ) : ViewModel() {
   
-  // Create a new state instance
+  // Create a new observable State instance
   var state by mutableStateOf(CompanyListingsState())
   
   private var searchJob : Job? = null
+  
+  init {
+    getCompanyListings()
+  }
   
   fun onEvent(event : CompanyListingEvent) {
     when (event) {
