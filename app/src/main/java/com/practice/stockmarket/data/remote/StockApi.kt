@@ -20,7 +20,7 @@ interface StockApi {
   ):ResponseBody
   
   // Get Json Data and parse it to CompanyInfoDto
-  @GET("function=OVERVIEW")
+  @GET("query?function=OVERVIEW")
   suspend fun getCompanyInfo(
     @Query("symbol") symbol:String,
     @Query("apikey") apiKey:String = API_KEY

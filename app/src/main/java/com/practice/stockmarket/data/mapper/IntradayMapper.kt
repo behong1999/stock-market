@@ -1,5 +1,6 @@
 package com.practice.stockmarket.data.mapper
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.practice.stockmarket.data.remote.dto.IntradayInfoDto
@@ -9,9 +10,9 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-@RequiresApi(Build.VERSION_CODES.O)
+@SuppressLint("NewApi")
 fun IntradayInfoDto.toIntradayInfo() : IntradayInfo {
-  val pattern = "yyyy-mm-dd HH:mm:ss"
+  val pattern = "yyyy-MM-dd HH:mm:ss"
   val formatter = DateTimeFormatter.ofPattern(pattern, Locale.getDefault())
   val localDateTime = LocalDateTime.parse(timestamp, formatter)
   return IntradayInfo(localDateTime, close)

@@ -8,10 +8,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.vector.VectorProperty
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.practice.stockmarket.domain.model.IntradayInfo
 import kotlin.math.round
 import kotlin.math.roundToInt
@@ -48,17 +46,35 @@ fun StockChart(
     Paint().apply {
       color = android.graphics.Color.WHITE
       textAlign = Paint.Align.CENTER
-      textSize = density.run { 12.sp.toPx() }
+      textSize = density.run { 12.dp.toPx() }
     }
   }
   
   Canvas(modifier = modifier) {
     val spacePerHour = (size.width - spacing) / infos.size
+    drawContext.canvas.nativeCanvas.apply {
+      drawText(
+        "USD",
+        spacePerHour - 3f,
+        0f,
+        textPaint.apply {
+          typeface = android.graphics.Typeface.DEFAULT_BOLD
+        }
+      )
+      drawText(
+        "Hour",
+        size.width,
+        size.height,
+        textPaint.apply {
+          typeface = android.graphics.Typeface.DEFAULT_BOLD
+        }
+      )
+    }
+    
     (0 until infos.size - 1 step 2).forEach { i ->
       val info = infos[i]
       val hour = info.date.hour
       
-      // Access to native canvas
       drawContext.canvas.nativeCanvas.apply {
         drawText(
           hour.toString(),
@@ -69,7 +85,7 @@ fun StockChart(
       }
     }
     
-    (0..5).forEach { i ->
+    (0..4).forEach { i ->
       drawContext.canvas.nativeCanvas.apply {
         drawText(
           round(lowerBound + closeStep * i).toString(),
@@ -113,7 +129,7 @@ fun StockChart(
       }
     
     drawPath(
-     strokePath,
+      strokePath,
       graphColor,
       style = Stroke(
         width = 3.dp.toPx(),
